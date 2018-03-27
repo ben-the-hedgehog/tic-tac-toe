@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Home</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block content %}
   <h1>Hello {{ user.username }}!</h1>
   <p>
     Welcome to your home page!
@@ -21,6 +19,5 @@
     </ul>
 
     You passed {{ testparam }} in the query string.
-  </div>
-</body>
-</html>
+
+{% endblock %}
