@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 
+{% block title %} {{ user.username }}'s Home {% endblock %}
 
 {% block content %}
   <h1>Hello {{ user.username }}!</h1>
