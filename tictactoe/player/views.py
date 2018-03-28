@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from gameplay.models import Game
+from .models import Invitation
+from .forms import InvitationForm
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -16,3 +18,16 @@ def home(request):
             'allmygames' : my_games,
             'testparam' : request.GET.get('test', 'none')
         })
+
+@login_required
+def new_invitation(request):
+    if request.method == "GET":
+        form = InvitationForm()
+    elif request.method == "POST":
+        invitation = Invitation(from_player=request.user)
+        form = InvitationForm(instance=invitation, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("player_home")
+
+    return render(request, "player/new_invitation_form.html", {'form' : form })

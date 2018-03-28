@@ -19,6 +19,7 @@
       {% endfor %}
     </ul>
 
-    You passed {{ testparam }} in the query string.
-
+    <a href="{% url 'player_new_invitation' %}" class="btn btn-default">
+      Invite a player to a game
+    </a>
 {% endblock %}
