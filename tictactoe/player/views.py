@@ -10,12 +10,14 @@ def home(request):
 
     my_games = Game.objects.games_for_user(request.user)
     active_games = my_games.active()
+    my_invites = request.user.invitations_received.all()
 
     return render(request, "player/home.html",
         {
             'ngames' : Game.objects.count(),
             'nactivegames' : active_games,
             'allmygames' : my_games,
+            'allmyinvites' : my_invites,
             'testparam' : request.GET.get('test', 'none')
         })
 
