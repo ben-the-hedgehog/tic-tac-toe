@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from gameplay.models import Game
 from .models import Invitation
 from .forms import InvitationForm
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 @login_required
@@ -33,3 +34,19 @@ def new_invitation(request):
             return redirect("player_home")
 
     return render(request, "player/new_invitation_form.html", {'form' : form })
+
+@login_required
+def view_invitation(request, id):
+    invitation = get_object_or_404(Invitation, pk=id)
+    if not invitation.to_player == request.user:
+        raise PermissionDenied
+    if request.method == "POST":
+        if "accept" in request.POST:
+            game = Game.objects.create(
+                first_player = invitation.from_player,
+                second_player = invitation.to_player
+            )
+        invitation.delete()
+        return redirect("player_home")
+    else:
+        return render(request, "player/view_invitation.html", {'invitation' : invitation})

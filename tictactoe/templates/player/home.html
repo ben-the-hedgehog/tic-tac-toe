@@ -29,8 +29,9 @@
         <container class="container-fluid">
           <ul class="list-group">
             {% for inv in allmyinvites %}
-              <a class="list-group-item" href="#">
-                {{ inv.id }}: {{ inv.from_player }}  {{ inv.timestamp }}
+              <a class="list-group-item row" href="{% url 'player_view_invitation' inv.id %}">
+                <div class="col-md-6"> {{ inv.from_player }} </div>
+                <div class="col-md-6"> {{ inv.timestamp }} </div>
               </a>
             {% endfor %}
 
